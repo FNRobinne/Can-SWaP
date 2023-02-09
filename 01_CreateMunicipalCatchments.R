@@ -35,40 +35,6 @@ library(tidyverse)
 
 ## Processing ------------------------------------------------------------------
   
-                        ### DEM conditioning ###
-  
-  # Burning is applied as new segments were added to Hydrosheds
-  # Burn Updated Hydrorivers into Hydrosheds 30s (~450m resolution)
-  # streams <- "HYDROSHEDS/HydroRivers_v10_just_Can_whole_edited.shp"
-  dem <- "HYDROSHEDS/hyd_na_ar_merge.tif"
-  output_burn <- "HYDROSHEDS/hyd_burn.tif"
-  
-
-  wbt_fill_burn(dem = dem,
-                streams = streams,
-                output = output_burn,
-                #wd = "C:/Users/frobinne/OneDrive - NRCan RNCan/Documents/Professionel/PROJECTS/45_2022_CANADA_FOREST_CHANGE_MUNICIPAL_CATCHMENTS_ACTIVE/02_PROCESSED_DATA/HYDROSHEDS/HUC5_WhiteboxTest",
-                verbose_mode = T)
-  
-  # Fill depressions
-  dem_burn <- output_burn
-  output_fill <- "HYDROSHEDS/hyd_fill.tif"
-  
-  wbt_breach_depressions_least_cost(dem = dem,
-                                    output = output_fill,
-                                    dist = 10,
-                                    fill = T,
-                                    verbose_mode = T)
-
-                      ### Watershed delineation ###
-  
-  # Flow direction
-  dem_fill <- output_fill
-  output_d8 <- "HYDROSHEDS/FlowAcc_D8.tif"
-  
-  wbt_d8_pointer(dem = dem_fill, 
-                 output = output_d8)
-  
   # Compute basins
   outlets <- "NRCAN/Can_Mun_Surf_Intakes_Lakes&streams_snapped_on_hyrv.shp"
   d8_ptr <- "HYDROSHEDS/hyd_na_ar_dir_merge_15s.tif"
