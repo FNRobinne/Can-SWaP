@@ -122,7 +122,7 @@ library(tidyverse)
   # reproject polygon layer
   can_catch_3979 <- st_transform(can_catch, crs = 3979)
   # Write output
-  st_write(can_catch, 
+  st_write(can_catch_3979, 
            "C:/Users/frobinne/Documents/Professional/PROJECTS/39_2021_CANADA_F2F_SOURCE2TAP_ACTIVE/02_PROCESSED_DATA/NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can-SWaP_AllLicences_V1.gpkg",
            delete_dsn = T)
   
