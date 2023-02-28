@@ -30,13 +30,15 @@ options(scipen = 6, digits = 4) # non-scientific notation
 memory.limit(30000000)     # increase memory allowance
 
 ## Load libraries --------------------------------------------------------------
+
 library(whitebox)
   wbt_init(exe_path = 'C:/Users/frobinne/Documents/WhiteboxTools/WBT/whitebox_tools.exe')
 library(sf)
 library(tidyverse)
 
 ## Set working directory -------------------------------------------------------
-  setwd("C:/Users/frobinne/Documents/Professional/PROJECTS/39_2021_CANADA_F2F_SOURCE2TAP_ACTIVE/02_PROCESSED_DATA")
+  
+setwd("C:/Users/frobinne/Documents/Professional/PROJECTS/39_2021_CANADA_F2F_SOURCE2TAP_ACTIVE/02_PROCESSED_DATA")
   
 ## Processing ------------------------------------------------------------------
   
@@ -45,8 +47,8 @@ library(tidyverse)
                     #################################
  
    # Compute raster basins
-  outlets <- "HYDROLAB_MCGILL/Pourpoints_WGS84_RiverAtlas_Segments_With_Licence_V2.shp"
-  d8_ptr <- "HYDROSHEDS/hyd_na_ar_dir_merge_15s.tif"
+  outlets <- "HYDROLAB_MCGILL/Pourpoints_WGS84_RiverAtlas_Segments_With_Licence_V3.shp"
+  d8_ptr <- "HYDROLAB_MCGILL/hyd_na_ar_dir_merge_15s.tif"
   output_basins <- "NRCAN/Unnest_Basins/Unnest_Basins.tif"
   
   wbt_unnest_basins(d8_pntr = d8_ptr, 
@@ -79,7 +81,7 @@ library(tidyverse)
   
   # Write output
   st_write(can_catch, 
-          "C:/Users/frobinne/Documents/Professional/PROJECTS/39_2021_CANADA_F2F_SOURCE2TAP_ACTIVE/02_PROCESSED_DATA/NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can-SWaP_AllLicences_V1.gpkg")
+          "C:/Users/frobinne/Documents/Professional/PROJECTS/39_2021_CANADA_F2F_SOURCE2TAP_ACTIVE/02_PROCESSED_DATA/NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can-SWaP_AllLicences_V0.gpkg")
   
   
                 ###############################################
