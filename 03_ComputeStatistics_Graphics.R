@@ -13,10 +13,13 @@
 ##
 ## ---------------------------
 ##
-## Notes: We strongly recommend reading the data descriptor for best use of the data
+## Notes: 
+##
+##    Beware of file names when running the script with data from the FigShare repo 
+##
+##    We strongly recommend reading the data descriptor for best use of the data
 ##    and reuse of this script, as well as HydroATLAS documentation
 ##
-##   
 ## ---------------------------
 
 ## General options -------------------------------------------------------------
@@ -35,7 +38,7 @@ setwd("C:/Users/frobinne/Documents/Professional/PROJECTS/39_2021_CANADA_F2F_SOUR
 
 ## Processing ------------------------------------------------------------------
 
-canswap <- st_read("NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can_SWaP_AllLicences_V1-1.gpkg")
+canswap <- st_read("NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can_SWaP_AllLicences_V2_CleanAtt.gpkg")
   
   # Area statistics
   print(median(canswap$AREA * 0.000001)) #In square kilometers
@@ -51,7 +54,7 @@ canswap <- st_read("NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can_SWaP_AllLice
     filter(WET_PC_UG2 > 0)
   print(nrow(cnt_wet))
   
-   # Protected area statistics (%)
+  # Protected area statistics (%)
   print(mean(canswap$PAC_PC_USE))
   cnt_pac <- canswap %>%
     filter(PAC_PC_USE > 0)
@@ -61,7 +64,7 @@ canswap <- st_read("NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can_SWaP_AllLice
   print(mean(canswap$HFT_IX_U09))
   print(range(canswap$HFT_IX_U09))
   
-  # Graphs
+  # Boxplots
   # Forest cover
   bxp_for <- ggboxplot(canswap, x = "ORD_STRA", y = "FOR_PC_USE",
                        color = "forestgreen", fill = "yellowgreen", add = "jitter",
@@ -78,7 +81,7 @@ canswap <- st_read("NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can_SWaP_AllLice
     rremove("legend") +
     rremove("ylab")
       
-  #bxp_for
+  #bxp_for # Call to visualize the plot if need be
   
   # Wetland
   bxp_wet <- ggboxplot(canswap, x = "ORD_STRA", y = "WET_PC_UG2",
@@ -96,8 +99,9 @@ canswap <- st_read("NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can_SWaP_AllLice
     rremove("legend") +
     rremove("ylab")
   
-  bxp_wet_2 <- ggpar(bxp_wet, ylim = c(0,100))
-  #bxp_wet_2
+  bxp_wet_2 <- ggpar(bxp_wet, ylim = c(0,100)) # Adjust the y axis to be 0-100
+  
+  #bxp_wet_2 # Call to visualize the plot if need be
   
   # Protected area
   bxp_pac <- ggboxplot(canswap, x = "ORD_STRA", y = "PAC_PC_USE",
@@ -115,7 +119,7 @@ canswap <- st_read("NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can_SWaP_AllLice
     rremove("legend") +
     rremove("ylab")
   
-  #bxp_pac
+  #bxp_pac # Call to visualize the plot if need be
   
   # Human footprint
   bxp_hft <- ggboxplot(canswap, x = "ORD_STRA", y = "HFT_IX_U09",
@@ -133,7 +137,11 @@ canswap <- st_read("NRCAN/Unnest_Basins/Municipal_Catchments_V1/Can_SWaP_AllLice
     rremove("legend") +
     rremove("ylab")
   
-  #bxp_hft
+  #bxp_hft # Call to visualize the plot if need be
   
-  # Arrange plots
- ggarrange(bxp_for, bxp_wet_2, bxp_pac, bxp_hft)
+  # Arrange plots and export to png 
+  # Figure 3
+  png(file = "C:/Users/frobinne/Documents/Professional/PROJECTS/39_2021_CANADA_F2F_SOURCE2TAP_ACTIVE/04_DOCS/Fig3_Boxplots.png",
+      width = 600, height = 450)
+  ggarrange(bxp_for, bxp_wet_2, bxp_pac, bxp_hft)
+  dev.off()
